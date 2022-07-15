@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Stack to deploy Rollup function as service
+Parameters:
+  LambdaName:
+      Description: "Name for this function"
+      Type: "String"
+  LambdaDescription:
+      Description: "Description for this function"
+      Type: "String"
+  LambdaRole:
+      Description: "Role for this function"
+      Type: "String"
+  LambdaLayer:
+      Description: "Layer to use in this function"
+      Type: "String"
+Resources:
+  LambdaRollupWrapper:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Role: !Ref LambdaRole
+      FunctionName: !Ref LambdaName
+      MemorySize: 512
+      Timeout: 60
+      Handler: service.lambda_handler
+      Runtime: python3.9
+      # CodeUri: .
+      CodeUri: ./src
+      Description: !Ref LambdaDescription
+      Layers:
+        - !Ref LambdaLayer

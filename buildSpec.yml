@@ -1,0 +1,10 @@
+version: 0.1
+phases:
+  install:
+    commands:
+    - aws cloudformation package --template-file cftemplate.yml --s3-bucket $BUCKET_NAME --output-template-file output-template.yaml
+    # - sam package --template-file template.yml --output-template-file package.yml --s3-bucket demo-ci-cd-sam-bucket
+artifacts:
+  type: zip
+  files:
+  - '**/*'
